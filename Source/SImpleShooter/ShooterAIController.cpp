@@ -35,15 +35,9 @@ bool AShooterAIController::IsDead() const {
 	return true;
 }
 
-void AShooterAIController::CheckPlayerDeath() {
-	AShooterCharacter* KilledCharacter = Cast<AShooterCharacter>(GetPawn());
-	/*if (IsDead()) {
-		if (KilledCharacter->CheckPlayerLife(KilledCharacter->IsPlayerControlled())) {
-			GetBlackboardComponent()->SetValueAsBool(TEXT("IsPlayerAlive"), KilledCharacter->CheckPlayerLife(KilledCharacter->IsPlayerControlled()));
-			GetBlackboardComponent()->SetValueAsBool(TEXT("IsPlayerDead"), !KilledCharacter->CheckPlayerLife(KilledCharacter->IsPlayerControlled()));
-		}
-		UE_LOG(LogTemp, Warning, TEXT("someone died"));
-	}*/
+void AShooterAIController::PlayerDied() {
+	GetBlackboardComponent()->SetValueAsBool(TEXT("IsPlayerAlive"), false);
+	GetBlackboardComponent()->SetValueAsBool(TEXT("IsPlayerDead"), true);
 }
 
 

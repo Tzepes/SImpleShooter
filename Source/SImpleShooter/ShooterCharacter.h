@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "ShooterAIController.h"
 #include "ShooterCharacter.generated.h"
 
 class AGun;
@@ -17,6 +18,8 @@ class SIMPLESHOOTER_API AShooterCharacter : public ACharacter
 public:
 	// Sets default values for this character's properties
 	AShooterCharacter();
+
+	//UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
 	bool IsPlayerAlive;
 
 protected:
@@ -43,7 +46,7 @@ public:
 	void WeaponSwitchLast();
 	void Hidder();
 	void Reload();
-	bool CheckPlayerLife(bool Alive);
+	bool CheckPlayerLife(AShooterCharacter* Character);
 
 	UFUNCTION(BlueprintCallable)
 	void SupplyChar();
@@ -55,6 +58,7 @@ private:
 	void LookToSideRate(float AxisValue);
 
 	bool DiedOnce = false;
+	bool status;
 
 	UPROPERTY(EditAnywhere)
 	USceneComponent* DropSpawnPoint = nullptr;
@@ -83,5 +87,5 @@ private:
 	UPROPERTY()
 	APickUp* PickUp;
 
-	int32 ActiveIndex = 0;
+	int32 ActiveIndex = 0;	
 };

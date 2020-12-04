@@ -87,5 +87,5 @@ private:
 	UPROPERTY()
 	APickUp* PickUp;
 
-	int32 ActiveIndex = 0;	
+	int32 ActiveIndex = 0;
 };

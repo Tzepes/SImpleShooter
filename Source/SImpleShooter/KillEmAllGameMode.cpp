@@ -10,7 +10,12 @@ void AKillEmAllGameMode::PawnKilled(APawn* PawnKilled) {
 	Super::PawnKilled(PawnKilled);
 
 	APlayerController* PlayerController = Cast<APlayerController>(PawnKilled->GetController());
-	if (PlayerController != nullptr) {
+	if (PlayerController != nullptr) // player died
+	{
+		for (AShooterAIController* AI : TActorRange<AShooterAIController>(GetWorld()))
+		{
+			AI->PlayerDied();
+		}
 		EndGame(false);
 	}
 

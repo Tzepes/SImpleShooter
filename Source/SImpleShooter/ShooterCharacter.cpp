@@ -24,7 +24,6 @@ void AShooterCharacter::BeginPlay()
 	Super::BeginPlay();
 
 	Health = MaxHealth;
-	//IsPlayerAlive = true;
 
 	for (TSubclassOf<AGun> GunIndex : GunClass) {
 		Gun = GetWorld()->SpawnActor<AGun>(GunIndex);
@@ -79,15 +78,6 @@ float AShooterCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Dama
 	if (IsDead()) {
 		FVector Loc = DropSpawnPoint->GetComponentLocation();
 		FRotator Rot = DropSpawnPoint->GetComponentRotation();
-		AShooterAIController* AIController = Cast<AShooterAIController>(GetController());
-
-		//CheckPlayerLife(this);
-		if(this->IsPlayerControlled()){
-			if (AIController != nullptr) {
-				AIController->PlayerDied();
-				UE_LOG(LogTemp, Warning, TEXT("the function was called"));
-			}
-		}
 
 		ASImpleShooterGameModeBase* GameMode = GetWorld()->GetAuthGameMode<ASImpleShooterGameModeBase>();
 		if (GameMode != nullptr) {
@@ -169,14 +159,6 @@ void AShooterCharacter::Reload()
 	Gun->ChangeMagazine();
 }
 
-/*bool AShooterCharacter::CheckPlayerLife(AShooterCharacter* Character)
-{
-	if (Character->IsPlayerControlled()) {
-		return true;
-	}
-	return false;
-}
-*/
 void AShooterCharacter::SupplyChar() {
 	Gun->Supply();
 }

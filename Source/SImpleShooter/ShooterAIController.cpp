@@ -11,7 +11,7 @@
 
 void AShooterAIController::BeginPlay() {
 	Super::BeginPlay();
-	PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
+	APawn* PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
 	//ControlledCharacter;
 	
 	if (AIBehavior != nullptr) {

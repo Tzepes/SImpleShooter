@@ -20,7 +20,6 @@ void AShooterAIController::BeginPlay() {
 		GetBlackboardComponent()->SetValueAsVector(TEXT("StartLocation"), GetPawn()->GetActorLocation());
 	}
 	GetBlackboardComponent()->SetValueAsBool(TEXT("IsPlayerAlive"), true);
-	GetBlackboardComponent()->SetValueAsBool(TEXT("IsPlayerDead"), false);
 }
 
 void AShooterAIController::Tick(float DeltaSeconds) {
@@ -37,7 +36,6 @@ bool AShooterAIController::IsDead() const {
 
 void AShooterAIController::PlayerDied() {
 	GetBlackboardComponent()->SetValueAsBool(TEXT("IsPlayerAlive"), false);
-	GetBlackboardComponent()->SetValueAsBool(TEXT("IsPlayerDead"), true);
 }
 
 

@@ -93,6 +93,7 @@ AController* AGun::GetOwnerController() const
 void AGun::ChangeMagazine() {
 	int32 NeededAmmo = MaxAmmo - Ammo;
 	UE_LOG(LogTemp, Warning, TEXT("RELOADING!"));	
+	UGameplayStatics::SpawnSoundAttached(ReloadSound, Mesh, TEXT("MuzzleFlashSocket"));
 	if (NeededAmmo <= AmmoReserve) {
 		AmmoReserve = AmmoReserve - NeededAmmo;
 	}
@@ -105,7 +106,13 @@ void AGun::ChangeMagazine() {
 }
 
 void AGun::Supply() {
-	AmmoReserve += 20;
+	if (MaxReserve - AmmoReserve > 20) {
+		AmmoReserve += 20;
+	}
+	else {
+		AmmoReserve += MaxReserve - AmmoReserve;
+	}
+		
 	UE_LOG(LogTemp, Warning, TEXT("AMMUNITON WAS ADDED"));
 	UE_LOG(LogTemp, Warning, TEXT("AMMO %i / %i"), Ammo, AmmoReserve);
 }

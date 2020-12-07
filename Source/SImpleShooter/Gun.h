@@ -31,6 +31,8 @@ public:
 	UPROPERTY()
 	int32 Ammo = MaxAmmo;
 
+	int32 MaxReserve = AmmoReserve;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -60,6 +62,9 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	USoundBase* EmptyGunClick;
+
+	UPROPERTY(EditAnywhere)
+	USoundBase* ReloadSound;
 
 	UPROPERTY(EditAnywhere)
 	float MaxRange = 100000;

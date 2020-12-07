@@ -22,16 +22,20 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void Supply(int32 DropAmmount);
 
+	UFUNCTION(BlueprintCallable)
+	bool IsAmmoReserveMAX();
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ammo variables")
-	int32 AmmoReserve = 180;
+	int32 MaxReserve = 180;
+
+	UPROPERTY()
+	int32 CurrentReserve = MaxReserve;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ammo variables")
 	int32 MaxAmmo = 30;
 
 	UPROPERTY()
 	int32 Ammo = MaxAmmo;
-
-	int32 MaxReserve = AmmoReserve;
 
 protected:
 	// Called when the game starts or when spawned

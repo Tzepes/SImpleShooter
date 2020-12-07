@@ -49,7 +49,7 @@ public:
 	bool CheckPlayerLife(AShooterCharacter* Character);
 
 	UFUNCTION(BlueprintCallable)
-	void SupplyChar();
+	void SupplyChar(int32 DropAmmount);
 
 private:
 	void MoveForword(float AxisValue);

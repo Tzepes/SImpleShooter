@@ -20,7 +20,7 @@ public:
 	void ChangeMagazine();
 
 	UFUNCTION(BlueprintCallable)
-	void Supply();
+	void Supply(int32 DropAmmount);
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ammo variables")
 	int32 AmmoReserve = 180;

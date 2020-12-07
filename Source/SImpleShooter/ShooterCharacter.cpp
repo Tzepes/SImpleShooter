@@ -159,6 +159,6 @@ void AShooterCharacter::Reload()
 	Gun->ChangeMagazine();
 }
 
-void AShooterCharacter::SupplyChar() {
-	Gun->Supply();
+void AShooterCharacter::SupplyChar(int32 DropAmmount) {
+	Gun->Supply(DropAmmount);
 }

@@ -105,9 +105,9 @@ void AGun::ChangeMagazine() {
 	UE_LOG(LogTemp, Warning, TEXT("AMMO %i / %i"), Ammo, AmmoReserve);
 }
 
-void AGun::Supply() {
-	if (MaxReserve - AmmoReserve > 20) {
-		AmmoReserve += 20;
+void AGun::Supply(int32 DropAmmount) {
+	if (MaxReserve - AmmoReserve > DropAmmount) {
+		AmmoReserve += DropAmmount;
 	}
 	else {
 		AmmoReserve += MaxReserve - AmmoReserve;

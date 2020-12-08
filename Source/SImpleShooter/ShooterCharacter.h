@@ -19,8 +19,11 @@ public:
 	// Sets default values for this character's properties
 	AShooterCharacter();
 
-	//UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
-	bool IsPlayerAlive;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite);
+	int32 DisplayAmmo;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite);
+	int32 DisplayReserve;
 
 protected:
 	// Called when the game starts or when spawned
@@ -89,6 +92,12 @@ private:
 
 	UPROPERTY()
 	APickUp* PickUp;
+
+	UPROPERTY()
+	TArray<int32> CurrentReserve;
+
+	UPROPERTY()
+	TArray<int32> Ammo;
 
 	int32 ActiveIndex = 0;
 	

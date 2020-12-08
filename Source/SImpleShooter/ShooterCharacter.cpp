@@ -24,9 +24,8 @@ void AShooterCharacter::BeginPlay()
 	Super::BeginPlay();
 
 	Health = MaxHealth;
-	
-
 	for (TSubclassOf<AGun> GunIndex : GunClass) {
+		
 		Gun = GetWorld()->SpawnActor<AGun>(GunIndex);
 		if (Gun == nullptr) {
 			UE_LOG(LogTemp, Error, TEXT("Gun has nullptr"));
@@ -36,10 +35,13 @@ void AShooterCharacter::BeginPlay()
 		Gun->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("WeaponSocket"));
 		Gun->SetOwner(this);
 		Gun->SetActorHiddenInGame(true);
+		CurrentReserve.Add(Gun->MaxReserve);
+		Ammo.Add(Gun->MaxAmmo);
 	}
 	SpawnedWeapons[0]->SetActorHiddenInGame(false);
 	GetMesh()->HideBoneByName(TEXT("weapon_r"), EPhysBodyOp::PBO_None);	
-	GetCurrentAmmo();
+	DisplayAmmo = Ammo[ActiveIndex];
+	//DisplayReserve = CurrentReserve[ActiveIndex];
 }
 
 bool AShooterCharacter::IsDead() const
@@ -121,6 +123,10 @@ void AShooterCharacter::Shoot()
 {
 	Gun = SpawnedWeapons[ActiveIndex];
 	Gun->PullTrigger();
+	if (Ammo[ActiveIndex] > 0) {
+		Ammo[ActiveIndex]--;
+		DisplayAmmo = Ammo[ActiveIndex];
+	}
 }
 
 void AShooterCharacter::WeaponSwitchNext()
@@ -132,6 +138,7 @@ void AShooterCharacter::WeaponSwitchNext()
 		ActiveIndex++;
 	}
 	Hidder();
+	DisplayAmmo = Ammo[ActiveIndex];
 }
 
 void AShooterCharacter::WeaponSwitchLast() {
@@ -141,6 +148,7 @@ void AShooterCharacter::WeaponSwitchLast() {
 		ActiveIndex--;
 	}
 	Hidder();
+	DisplayAmmo = Ammo[ActiveIndex];
 }
 
 float AShooterCharacter::GetHealthPrecent() const {
@@ -162,7 +170,11 @@ void AShooterCharacter::Hidder() {
 
 void AShooterCharacter::Reload()
 {
-	Gun->ChangeMagazine();
+	if (Ammo[ActiveIndex] != CurrentReserve[ActiveIndex]) {
+		Gun->ChangeMagazine();
+		Ammo[ActiveIndex] = SpawnedWeapons[ActiveIndex]->MaxAmmo;
+		DisplayAmmo = Ammo[ActiveIndex];
+	}
 }
 
 void AShooterCharacter::SupplyChar(int32 DropAmmount) {

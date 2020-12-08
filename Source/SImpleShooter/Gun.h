@@ -34,7 +34,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ammo variables")
 	int32 MaxAmmo = 30;
 
-	UPROPERTY()
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ammo variables")
 	int32 Ammo = MaxAmmo;
 
 protected:

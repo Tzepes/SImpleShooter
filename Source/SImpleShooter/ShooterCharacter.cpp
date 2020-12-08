@@ -24,6 +24,7 @@ void AShooterCharacter::BeginPlay()
 	Super::BeginPlay();
 
 	Health = MaxHealth;
+	
 
 	for (TSubclassOf<AGun> GunIndex : GunClass) {
 		Gun = GetWorld()->SpawnActor<AGun>(GunIndex);
@@ -38,6 +39,7 @@ void AShooterCharacter::BeginPlay()
 	}
 	SpawnedWeapons[0]->SetActorHiddenInGame(false);
 	GetMesh()->HideBoneByName(TEXT("weapon_r"), EPhysBodyOp::PBO_None);	
+	GetCurrentAmmo();
 }
 
 bool AShooterCharacter::IsDead() const
@@ -143,6 +145,10 @@ void AShooterCharacter::WeaponSwitchLast() {
 
 float AShooterCharacter::GetHealthPrecent() const {
 	return Health / MaxHealth;
+}
+
+int32 AShooterCharacter::GetCurrentAmmo() const {
+	return Gun->Ammo;
 }
 
 void AShooterCharacter::Hidder() {

@@ -33,6 +33,9 @@ public:
 	UFUNCTION(BlueprintPure)
 	float GetHealthPrecent() const;
 
+	UFUNCTION(BlueprintPure)
+	int32 GetCurrentAmmo() const;
+
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
@@ -88,4 +91,5 @@ private:
 	APickUp* PickUp;
 
 	int32 ActiveIndex = 0;
+	
 };

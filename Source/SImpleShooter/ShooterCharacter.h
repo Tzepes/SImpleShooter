@@ -99,6 +99,8 @@ private:
 	UPROPERTY()
 	TArray<int32> Ammo;
 
+	int32 CurrentMaxAmmo;
+
 	int32 ActiveIndex = 0;
 	
 };

@@ -41,7 +41,8 @@ void AShooterCharacter::BeginPlay()
 	SpawnedWeapons[0]->SetActorHiddenInGame(false);
 	GetMesh()->HideBoneByName(TEXT("weapon_r"), EPhysBodyOp::PBO_None);	
 	DisplayAmmo = Ammo[ActiveIndex];
-	//DisplayReserve = CurrentReserve[ActiveIndex];
+	DisplayReserve = CurrentReserve[ActiveIndex];
+	CurrentMaxAmmo = SpawnedWeapons[ActiveIndex]->MaxAmmo;
 }
 
 bool AShooterCharacter::IsDead() const
@@ -138,7 +139,10 @@ void AShooterCharacter::WeaponSwitchNext()
 		ActiveIndex++;
 	}
 	Hidder();
+	Gun = SpawnedWeapons[ActiveIndex];
 	DisplayAmmo = Ammo[ActiveIndex];
+	DisplayReserve = CurrentReserve[ActiveIndex];
+	CurrentMaxAmmo = Gun->MaxAmmo;
 }
 
 void AShooterCharacter::WeaponSwitchLast() {
@@ -148,7 +152,10 @@ void AShooterCharacter::WeaponSwitchLast() {
 		ActiveIndex--;
 	}
 	Hidder();
+	Gun = SpawnedWeapons[ActiveIndex];
 	DisplayAmmo = Ammo[ActiveIndex];
+	DisplayReserve = CurrentReserve[ActiveIndex];
+	CurrentMaxAmmo = Gun->MaxAmmo;
 }
 
 float AShooterCharacter::GetHealthPrecent() const {
@@ -170,13 +177,17 @@ void AShooterCharacter::Hidder() {
 
 void AShooterCharacter::Reload()
 {
-	if (Ammo[ActiveIndex] != CurrentReserve[ActiveIndex]) {
+	if (Ammo[ActiveIndex] != SpawnedWeapons[ActiveIndex]->MaxAmmo) {
 		Gun->ChangeMagazine();
-		Ammo[ActiveIndex] = SpawnedWeapons[ActiveIndex]->MaxAmmo;
+		Ammo[ActiveIndex] = SpawnedWeapons[ActiveIndex]->Ammo;
+		CurrentReserve[ActiveIndex] = SpawnedWeapons[ActiveIndex]->CurrentReserve;
 		DisplayAmmo = Ammo[ActiveIndex];
+		DisplayReserve = CurrentReserve[ActiveIndex];
 	}
 }
 
 void AShooterCharacter::SupplyChar(int32 DropAmmount) {
 	Gun->Supply(DropAmmount);
+	CurrentReserve[ActiveIndex] = Gun->CurrentReserve;
+	DisplayReserve = CurrentReserve[ActiveIndex];
 }

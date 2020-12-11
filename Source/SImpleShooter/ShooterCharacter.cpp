@@ -42,7 +42,6 @@ void AShooterCharacter::BeginPlay()
 	GetMesh()->HideBoneByName(TEXT("weapon_r"), EPhysBodyOp::PBO_None);	
 	DisplayAmmo = Ammo[ActiveIndex];
 	DisplayReserve = CurrentReserve[ActiveIndex];
-	CurrentMaxAmmo = SpawnedWeapons[ActiveIndex]->MaxAmmo;
 }
 
 bool AShooterCharacter::IsDead() const
@@ -124,10 +123,8 @@ void AShooterCharacter::Shoot()
 {
 	Gun = SpawnedWeapons[ActiveIndex];
 	Gun->PullTrigger();
-	if (Ammo[ActiveIndex] > 0) {
-		Ammo[ActiveIndex]--;
-		DisplayAmmo = Ammo[ActiveIndex];
-	}
+	DisplayAmmo = Gun->Ammo;
+	
 }
 
 void AShooterCharacter::WeaponSwitchNext()
@@ -140,9 +137,8 @@ void AShooterCharacter::WeaponSwitchNext()
 	}
 	Hidder();
 	Gun = SpawnedWeapons[ActiveIndex];
-	DisplayAmmo = Ammo[ActiveIndex];
-	DisplayReserve = CurrentReserve[ActiveIndex];
-	CurrentMaxAmmo = Gun->MaxAmmo;
+	DisplayAmmo = Gun->Ammo;
+	DisplayReserve = Gun->CurrentReserve;
 }
 
 void AShooterCharacter::WeaponSwitchLast() {
@@ -153,9 +149,8 @@ void AShooterCharacter::WeaponSwitchLast() {
 	}
 	Hidder();
 	Gun = SpawnedWeapons[ActiveIndex];
-	DisplayAmmo = Ammo[ActiveIndex];
-	DisplayReserve = CurrentReserve[ActiveIndex];
-	CurrentMaxAmmo = Gun->MaxAmmo;
+	DisplayAmmo = Gun->Ammo;
+	DisplayReserve = Gun->CurrentReserve;
 }
 
 float AShooterCharacter::GetHealthPrecent() const {
@@ -177,17 +172,14 @@ void AShooterCharacter::Hidder() {
 
 void AShooterCharacter::Reload()
 {
-	if (Ammo[ActiveIndex] != SpawnedWeapons[ActiveIndex]->MaxAmmo) {
+	if (Gun->Ammo != Gun->MaxAmmo) {
 		Gun->ChangeMagazine();
-		Ammo[ActiveIndex] = SpawnedWeapons[ActiveIndex]->Ammo;
-		CurrentReserve[ActiveIndex] = SpawnedWeapons[ActiveIndex]->CurrentReserve;
-		DisplayAmmo = Ammo[ActiveIndex];
-		DisplayReserve = CurrentReserve[ActiveIndex];
+		DisplayAmmo = Gun->Ammo;
+		DisplayReserve = Gun->CurrentReserve;
 	}
 }
 
 void AShooterCharacter::SupplyChar(int32 DropAmmount) {
 	Gun->Supply(DropAmmount);
-	CurrentReserve[ActiveIndex] = Gun->CurrentReserve;
-	DisplayReserve = CurrentReserve[ActiveIndex];
+	DisplayReserve = Gun->CurrentReserve;
 }

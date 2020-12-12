@@ -18,6 +18,8 @@ public:
 	virtual void Tick(float DeltaSeconds) override;
 	bool IsDead() const;
 	void PlayerDied();
+	void ReloadAI();
+	void WeaponLoaded();
 
 protected:
 	virtual void BeginPlay() override;
@@ -25,6 +27,4 @@ protected:
 private:
 	UPROPERTY(EditAnywhere)
 	class UBehaviorTree* AIBehavior;
-
-	//APawn* PlayerPawn;
 };

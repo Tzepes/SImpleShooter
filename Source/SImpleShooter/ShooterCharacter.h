@@ -52,6 +52,8 @@ public:
 	void WeaponSwitchLast();
 	void Hidder();
 	void Reload();
+	void AIReload();
+	void AIWeaponLoaded();
 	bool CheckPlayerLife(AShooterCharacter* Character);
 
 	UFUNCTION(BlueprintCallable)

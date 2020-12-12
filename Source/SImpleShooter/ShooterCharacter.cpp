@@ -6,6 +6,7 @@
 #include "PickUp.h"
 #include "Components/CapsuleComponent.h"
 #include "SImpleShooterGameModeBase.h"
+#include "ShooterAIController.h"
 #include "EngineUtils.h"
 
 // Sets default values
@@ -124,6 +125,7 @@ void AShooterCharacter::Shoot()
 	Gun = SpawnedWeapons[ActiveIndex];
 	Gun->PullTrigger();
 	DisplayAmmo = Gun->Ammo;
+	AIReload();
 	
 }
 
@@ -177,6 +179,22 @@ void AShooterCharacter::Reload()
 		DisplayAmmo = Gun->Ammo;
 		DisplayReserve = Gun->CurrentReserve;
 	}
+}
+
+void AShooterCharacter::AIReload()
+{
+	if (Gun->Ammo == 0) {
+		if (!this->IsPlayerControlled()) {
+			AShooterAIController* AIController = Cast<AShooterAIController>(GetController());
+			AIController->ReloadAI();
+		}
+	}		
+}
+
+void AShooterCharacter::AIWeaponLoaded()
+{
+	AShooterAIController* AIController = Cast<AShooterAIController>(GetController());
+	AIController->WeaponLoaded();
 }
 
 void AShooterCharacter::SupplyChar(int32 DropAmmount) {

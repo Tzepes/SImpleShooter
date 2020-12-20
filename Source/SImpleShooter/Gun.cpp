@@ -40,7 +40,6 @@ void AGun::PullTrigger()
 				HitActor->TakeDamage(Damage, DamageEvent, OwnerController, this);
 			}
 			Ammo--;
-			UE_LOG(LogTemp, Warning, TEXT("AMMO %i / %i"), Ammo, CurrentReserve);
 		}
 	}
 	else {
@@ -93,7 +92,6 @@ AController* AGun::GetOwnerController() const
 
 void AGun::ChangeMagazine() {
 	int32 NeededAmmo = MaxAmmo - Ammo;
-	UE_LOG(LogTemp, Warning, TEXT("RELOADING!"));	
 	UGameplayStatics::SpawnSoundAttached(ReloadSound, Mesh, TEXT("MuzzleFlashSocket"));
 	if (NeededAmmo <= CurrentReserve) {
 		CurrentReserve = CurrentReserve - NeededAmmo;
@@ -103,7 +101,6 @@ void AGun::ChangeMagazine() {
 		CurrentReserve = 0;
 	}
 	Ammo = Ammo + NeededAmmo;
-	UE_LOG(LogTemp, Warning, TEXT("AMMO %i / %i"), Ammo, CurrentReserve);
 }
 
 void AGun::Supply(int32 DropAmmount) {
@@ -113,9 +110,6 @@ void AGun::Supply(int32 DropAmmount) {
 	else {
 		CurrentReserve += MaxReserve - CurrentReserve;
 	}
-		
-	UE_LOG(LogTemp, Warning, TEXT("AMMUNITON WAS ADDED"));
-	UE_LOG(LogTemp, Warning, TEXT("AMMO %i / %i"), Ammo, CurrentReserve);
 }
 
 bool AGun::IsAmmoReserveMAX()

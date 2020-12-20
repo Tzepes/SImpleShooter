@@ -62,11 +62,16 @@ public:
 private:
 	void MoveForword(float AxisValue);
 	void MoveSideWays(float AxisValue);
+	void StartSprint();
+	void StopSprint();
 	void LookUpRate(float AxisValue);
 	void LookToSideRate(float AxisValue);
 
 	bool DiedOnce = false;
 	bool status;
+
+	UPROPERTY(EditAnywhere)
+	float SprintSpeedModifier = 1.75f;
 
 	UPROPERTY(EditAnywhere)
 	USceneComponent* DropSpawnPoint = nullptr;

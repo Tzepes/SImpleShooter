@@ -8,6 +8,7 @@
 #include "SImpleShooterGameModeBase.h"
 #include "ShooterAIController.h"
 #include "EngineUtils.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 // Sets default values
 AShooterCharacter::AShooterCharacter()
@@ -68,6 +69,8 @@ void AShooterCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 	PlayerInputComponent->BindAxis(TEXT("LookUpRate"), this, &AShooterCharacter::LookUpRate);
 	PlayerInputComponent->BindAxis(TEXT("LookToSideRate"), this, &AShooterCharacter::LookToSideRate);
 	PlayerInputComponent->BindAction(TEXT("Jump"), EInputEvent::IE_Pressed, this, &ACharacter::Jump);
+	PlayerInputComponent->BindAction(TEXT("Sprint"), EInputEvent::IE_Pressed, this, &AShooterCharacter::StartSprint);
+	PlayerInputComponent->BindAction(TEXT("Sprint"), EInputEvent::IE_Released, this, &AShooterCharacter::StopSprint);
 	PlayerInputComponent->BindAction(TEXT("Shoot"), EInputEvent::IE_Pressed, this, &AShooterCharacter::Shoot);
 	PlayerInputComponent->BindAction(TEXT("WeaponSwitchNext"), EInputEvent::IE_Pressed, this, &AShooterCharacter::WeaponSwitchNext);
 	PlayerInputComponent->BindAction(TEXT("WeaponSwitchLast"), EInputEvent::IE_Pressed, this, &AShooterCharacter::WeaponSwitchLast);
@@ -118,6 +121,14 @@ void AShooterCharacter::LookUpRate(float AxisValue)
 void AShooterCharacter::LookToSideRate(float AxisValue)
 {
 	AddControllerYawInput(AxisValue * RotationRate * GetWorld()->GetDeltaSeconds());
+}
+
+void AShooterCharacter::StartSprint() {
+	GetCharacterMovement()->MaxWalkSpeed *= SprintSpeedModifier;
+}
+
+void AShooterCharacter::StopSprint() {
+	GetCharacterMovement()->MaxWalkSpeed /= SprintSpeedModifier;
 }
 
 void AShooterCharacter::Shoot()

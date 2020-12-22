@@ -67,11 +67,12 @@ private:
 	void LookUpRate(float AxisValue);
 	void LookToSideRate(float AxisValue);
 
+	bool Sprinting;
 	bool DiedOnce = false;
 	bool status;
 
 	UPROPERTY(EditAnywhere)
-	float SprintSpeedModifier = 1.75f;
+	float SprintSpeedModifier = 1.50f;
 
 	UPROPERTY(EditAnywhere)
 	USceneComponent* DropSpawnPoint = nullptr;

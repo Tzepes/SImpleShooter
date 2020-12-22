@@ -26,6 +26,7 @@ void AShooterCharacter::BeginPlay()
 	Super::BeginPlay();
 
 	Health = MaxHealth;
+	Sprinting = false;
 	for (TSubclassOf<AGun> GunIndex : GunClass) {
 		
 		Gun = GetWorld()->SpawnActor<AGun>(GunIndex);
@@ -125,19 +126,22 @@ void AShooterCharacter::LookToSideRate(float AxisValue)
 
 void AShooterCharacter::StartSprint() {
 	GetCharacterMovement()->MaxWalkSpeed *= SprintSpeedModifier;
+	Sprinting = true;
 }
 
 void AShooterCharacter::StopSprint() {
 	GetCharacterMovement()->MaxWalkSpeed /= SprintSpeedModifier;
+	Sprinting = false;
 }
 
 void AShooterCharacter::Shoot()
 {
-	Gun = SpawnedWeapons[ActiveIndex];
-	Gun->PullTrigger();
-	DisplayAmmo = Gun->Ammo;
+	if (!Sprinting) {
+		Gun = SpawnedWeapons[ActiveIndex];
+		Gun->PullTrigger();
+		DisplayAmmo = Gun->Ammo;
+	}
 	AIReload();
-	
 }
 
 void AShooterCharacter::WeaponSwitchNext()
